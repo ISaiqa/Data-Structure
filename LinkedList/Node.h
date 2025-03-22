@@ -42,8 +42,8 @@ Node<T> * Node<T>:: getNext()
 template <class T>
 void Node<T> :: display()
 {
-//	cout<<"Info:"<<this->info<<endl;
+	cout<<"Info:"<<this->info<<endl;
 //	cout<<"Next:"<<this->next;
-	cout<<"|("<<this<<")|"<<this->info<<"|"<<this->next<<"|"<<endl;
+	//cout<<"|("<<this<<")|"<<this->info<<"|"<<this->next<<"|"<<endl;
 	
 }

@@ -11,6 +11,8 @@ int main(int argc, char** argv)
 	list.addToHead(s1);
 	list.addToTail(s2);
 	list.display();
+	// Search for a book and display it
+    
 	
 	
 	return 0;

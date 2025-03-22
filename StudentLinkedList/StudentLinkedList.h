@@ -1,5 +1,5 @@
 #include<iostream>
-#include"C:\Users\abc\OneDrive\Desktop\3rd sem\DSA\Data Structure\LinkedList\LinkedList.h"
+#include"C:\Users\abc\OneDrive\Desktop\3rd sem\Data Structure\LinkedList\LinkedList.h"
 
 using namespace std;
 template <class T>
