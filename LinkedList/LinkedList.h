@@ -27,6 +27,7 @@ class LinkedList
 		void deleteBySearch(T element);
 		void addBeforeElement(T existingV,T newV);
 		void addAfterElement(T existingV, T newV);
+		void addSorted(T element);
 		
 };//End of class
 template <class T>
@@ -221,4 +222,32 @@ void LinkedList<T>::display()
 		 	 
 	 }
  }
- 
+ template <class T>
+void LinkedList<T>::addSorted(T element) 
+{
+    Node<T>* n = new Node<T>(element);
+    if (head == 0 && tail == 0) 
+	{ // Empty list
+        head = tail = n;
+    } 
+	else if (element <= head->getInfo()) 
+	{ // Insert before head
+        n->setNext(head);
+        head = n;
+    } 
+	else if (element >= tail->getInfo()) 
+	{ // Insert after tail
+        tail->setNext(n);
+        tail = n;
+    } 
+	else 
+	{ // Insert in the middle
+        Node<T>* i = head;
+        while (i->getNext() != 0 && element > i->getNext()->getInfo()) 
+		{
+            i = i->getNext();
+        }
+        n->setNext(i->getNext());
+        i->setNext(n);
+    }
+}

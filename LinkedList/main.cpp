@@ -6,19 +6,20 @@
 int main(int argc, char** argv) 
 {
 	LinkedList<int> list1;
-	list1.addToTail(3);
-	list1.addToTail(7);
-	list1.addToTail(1);
-	list1.addToTail(5);
+	list1.addSorted(3);
+	list1.addSorted(7);
+	list1.addSorted(1);
+	list1.addSorted(5);
+	list1.addSorted(89);
 	list1.display(); 
-	list1.deleteBySearch(7);
+//	list1.deleteBySearch(7);
 //	list1.deleteFromTail();
-	 list1.display();
+	// list1.display();
 	cout<<endl;
 //	cout<<list1.Search(7);
-	cout<<endl;
+	//cout<<endl;
 //	cout<<list1.Search(19);
-	LinkedList<char> list2;
+/*	LinkedList<char> list2;
 	list2.addToTail('I');
 	list2.addToTail('f');
 	list2.addToTail('f');
@@ -47,5 +48,6 @@ int main(int argc, char** argv)
     list3.addBeforeElement("Iffat","is");
     list3.addAfterElement("Iffat" ,"Mir");
     list3.display();
+    */
 	return 0;
 }

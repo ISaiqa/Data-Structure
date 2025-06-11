@@ -3,7 +3,7 @@ using namespace std;
 template <class T>
 class Node
 {
-	private:
+	public:
 		T info;
 		Node<T> *next;
 	public:

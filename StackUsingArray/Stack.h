@@ -13,7 +13,8 @@ class Stack
 		{
 			this->top=-1;
 			this->size=size;
-			arr=new T(size);
+			//arr=new T(size);
+			arr=new T[size];
 		}
 		void push(T element);
 		T pop();
@@ -38,8 +39,11 @@ void Stack<T>::push(T element)
 template<class T>
 T Stack<T>::pop()
 {
-	if(top==-1)	
+	if(top==-1)
+	{
 		cerr<<"Stack Underflow \n";
+		return T();
+			}
 	else
 	{
 		T element=arr[top];

@@ -91,36 +91,58 @@ void BookLinkedList<T>::removeSelectedBook(int id)
 	}
 	
 }
+
 template <class T>
 void BookLinkedList<T>::loadFromFile(string FileName)
 {
-	ifstream file (FileName); //opens the file
-	if(!file.is_open()) //check if file could not be opened 
-	{
-		cout <<"Error! Could not open file:"<<FileName;
-		return;
-	}
-	string line; 
-	while(getline(file,line)) // reads each line
-	{
-		stringstream ss (line) ;// parse each line 
-		int bookID;
-        string title, author;
-        double price;
-        string temp; // Temporary string for parsing
-        // to parse comma seperated values
-        getline(ss,temp,',');
-        bookID = stoi(temp);    // Convert to int
-        getline(ss, title, ','); // Read title
-        getline(ss, author, ','); // Read author
-        getline(ss, temp);       // Read price (no comma after last field)
-        price = stod(temp);      // Convert to double
-        // Create a new Book object and add it to the list
-        Book book(bookID, title, author, price);
-        this->addToTail(book); // Add to the head of the list
-        }
+    ifstream read(FileName);
+    if (!read.is_open()) 
+    {
+        cout << "Error: Could not open " << FileName << "!" << endl;
+        return;
+    }
 
-    file.close(); // Close the file
+    int id;
+    string title, author, line;
+    double price;
+
+    while (getline(read, line)) 
+    {
+        stringstream ss(line);
+        string price_str;
+
+        if (getline(ss, line, ',') && (stringstream(line) >> id))
+        {
+            if (getline(ss, title, ',') &&
+                getline(ss, author, ',') &&
+                getline(ss, price_str))
+            {
+                try 
+                {
+                    price = stod(price_str);
+                    Book book(id, title, author, price);
+                    this->addToTail(book);
+                } 
+                catch (const exception& e) 
+                {
+                    cout << "Error: Invalid price format for book ID " << id << " in " << FileName << endl;
+                    continue;
+                }
+            }
+            else 
+            {
+                cout << "Error: Invalid data format for book ID " << id << " in " << FileName << endl;
+                continue;
+            }
+        }
+        else 
+        {
+            cout << "Error: Invalid ID format in " << FileName << endl;
+            continue;
+        }
+    }
+
+    read.close();
     cout << "Books successfully loaded from " << FileName << endl;
 }
 	

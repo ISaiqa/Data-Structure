@@ -1,4 +1,10 @@
-1,The Great Gatsby,F. Scott Fitzgerald,12.99
-2,1984,George Orwell,15.99
-3,To Kill a Mockingbird,Harper Lee,10.50
-4,Pride and Prejudice,Jane Austen,9.99
+1,The Kite Runner,Khaled Hosseini,14.99
+2,A Thousand Splendid Suns,Khaled Hosseini,13.49
+3,Data Structures and Algorithms in C++,Michael T. Goodrich,45.99
+4,Introduction to Algorithms,Thomas H. Cormen,59.99
+5,The C Programming Language,Brian W. Kernighan,39.99
+6,To Kill a Mockingbird,Harper Lee,10.50
+7,The Alchemist,Paulo Coelho,12.99
+8,Computer Science: An Interdisciplinary Approach,Robert Sedgewick,49.99
+9,1984,George Orwell,15.99
+10,Discrete Mathematics and Its Applications,Kenneth H. Rosen,54.99
