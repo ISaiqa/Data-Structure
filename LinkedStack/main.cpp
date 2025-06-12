@@ -102,6 +102,13 @@ int main(int argc, char** argv) {
                 cout << "Invalid choice. Please try again.\n";
         }
     } while (true);
+    LinkedStack<int> s1;
+    s1.push(23);
+    s1.push(230);
+    s1.push(2);
+    s1.removeAll();
+    cout<<s1.pop();
+    
 
     return 0;
 }
@@ -156,17 +163,40 @@ void symbolBalancing(string input) {
         cout << "Symbols are balanced\n";
     }
 }
+/*
+Stack Application-Postfix Evaluation 
+1. Create an empty stack of type double 
+2. Read input postfix expression char by char till the end of input 
+• 2.1. If char is an operand, convert it into its double equivalent 
+and then push it on the stack 
+• 2.2. If char is an operator then pop two elements from the stack, 
+perform the operation and push the result back on the stack. 
+3. At the end of input, Pop the final result and display it
 
-void postfixEvaluation(string exp) {
-    LinkedStack<double> s1;
-    for (int i = 0; i < exp.length(); i++) {
-        if (isdigit(exp[i])) {
-            double d = exp[i] - '0';
+*/
+void postfixEvaluation(string exp) 
+{
+    LinkedStack<double> s1;//1.create a stack double
+    for (int i = 0; i < exp.length(); i++)//2.read input char by char 
+	{
+        if (isdigit(exp[i])) //2.1char is an operand
+		{
+            double d = exp[i] - '0';//convert it into double
+            //because every digit has an ASCII value
+            //the ASCII value will help us convert char into double
+            /*	char c = exp[i];
+				string str(1, c); // Create a string with one character
+				double d = stod(str)
+				*/
             s1.push(d);
-        } else if (exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') {
-            double p1 = s1.pop();
+        } 
+		else if (exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/') 
+		{//2.2if char is operator
+            double p1 = s1.pop();//pop two operators
             double p2 = s1.pop();
-            switch (exp[i]) {
+            switch (exp[i]) 
+			{//check what is the operator to perform specific operation
+			//push the result to stack
                 case '+':
                     s1.push(p2 + p1);
                     break;
@@ -182,51 +212,76 @@ void postfixEvaluation(string exp) {
             }
         }
     }
-    cout << s1.pop() << endl;
+    cout << s1.pop() << endl;//3
 }
+/*
+Stack Application-(infix-to-postfix conversion) 
+1.Create an empty stack of type char and 
+string variable to store output postfix expession 
+2.Read input expression char by char till the end of input
+ 2.1.Operand: display it or make it part of output 
+ 2.2.Opening Parenthesis: push 
+ 2.3.Operator: 
+ 2.3.1. If stack is empty then push it 
+ 2.3.2. If the stack is non-empty and there is no opening bracket,
+  pop and display characters while the top operator's precedence is 
+  greater than or equal to the current character. 
+  After popping, push the current operator onto the stack.          
+  2.4.Closing Parenthesis: Pop and display operators from the stack 
+  until an opening parenthesis is encountered. 
+  Pop the parenthesis but do not display it..
+   3.At the end of input, if stack is non-empty, 
+   pop operators from stack and display them until the stack becomes empty.
+*/
 
 string infixToPostfix(string infix) 
 {
-    LinkedStack<char> s1;
-    string postfix = "";
-    for (int i = 0; i < infix.length(); i++) 
+    LinkedStack<char> s1;//1.stack of char
+    string postfix = "";//string to store output
+    for (int i = 0; i < infix.length(); i++) //read input char by char
     {
-        if (isalpha(infix[i]) || isdigit(infix[i])) 
+        if (isalpha(infix[i]) || isdigit(infix[i])) //2.1 (operand)
         {
-            postfix += infix[i];
-        } else if (infix[i] == '(') 
+            postfix += infix[i];//add to output string
+        } 
+		else if (infix[i] == '(') //2.2(openeing parantheseis )
         {
             s1.push(infix[i]);
-        } else if (infix[i] == '+' || infix[i] == '/' || infix[i] == '*' || infix[i] == '-') 
-        {
-            if (s1.isEmpty()) 
+        } 
+		else if (infix[i] == '+' || infix[i] == '/' || infix[i] == '*' || infix[i] == '-') 
+        {//2.3
+            if (s1.isEmpty()) //2.3.1(operator but stack is empty)
             {
                 s1.push(infix[i]);
-            } else 
+            } 
+			else //2.3.2 operator but stack is not empty
             {
-                while (!s1.isEmpty() && s1.topValue() != '(' && prec(s1.topValue()) >= prec(infix[i])) 
+                while (!s1.isEmpty() && s1.topValue() != '(' 
+				&& prec(s1.topValue()) >= prec(infix[i]))
                 {
                     postfix += s1.pop();
                 }
                 s1.push(infix[i]);
             }
-        } else if (infix[i] == ')') 
+        } 
+		else if (infix[i] == ')') //2.4 pop until openeing bracket
         {
             while (s1.topValue() != '(') 
             {
                 postfix += s1.pop();
             }
-            s1.pop();
+            s1.pop();//do not add opening bracket to input string
         }
-    }
-    while (!s1.isEmpty()) 
+    }//for (end of input)
+    while (!s1.isEmpty()) //3(pop characters from stack )
     {
         postfix += s1.pop();
     }
     return postfix;
 }
 
-int prec(char optr) {
+int prec(char optr) 
+{//to check precedence and return a value 
     if (optr == '^')
         return 3;
     else if (optr == '*' || optr == '/')
@@ -235,56 +290,100 @@ int prec(char optr) {
         return 1;
     return 0;
 }
+/*
+Stack Application-(infix-to-prefix conversion) 
+1.Create an empty stack of type char 
+2.Create an output string 
+3.Reverse the input expression 
+4.Read the reversed input expression char by char till the end of input 
+4.1.Operand: add to a output string 
+4.2.Closing Parenthesis: push 
+4.3.Operator: 
+4.3.1.If stack is empty then push it 
+4.3.2. If the stack is non-empty and there is no closing bracket, 
+pop and display characters while the top operator's precedence is 
+greater than the current character. 
+After popping, push the current operator onto the stack. .
+ 4.4.Opening Parenthesis: Pop operators from stack and add them to 
+ output string until we pop a closing parenthesis which will be popped but
+  not be added to output string. 
+  5.At the end of input, if stack is non-empty, pop operators from stack 
+  and add them to output string until the stack becomes empty. 
+  6.Reverse the output string and display it.*/
 
 string infixToPrefix(string infix) 
 {
-    LinkedStack<char> s1;
-    string prefix = "";
-    infix = stringReversal(infix); 
-    for (int i = 0; i < infix.length(); i++) 
+    LinkedStack<char> s1;//1 create a char stack
+    string prefix = "";//2 create an output string
+    infix = stringReversal(infix);//3 reverse input
+    for (int i = 0; i < infix.length(); i++)//read input char by char
     {
-        if (isalpha(infix[i]) || isdigit(infix[i])) 
+        if (isalpha(infix[i]) || isdigit(infix[i]))//4.1:operand add to output
         {
             prefix += infix[i];
-        } else if (infix[i] == ')') 
+        } 
+		else if (infix[i] == ')') //4.2:closing bracket push in stack
         {
             s1.push(infix[i]);
-        } else if (infix[i] == '+' || infix[i] == '/' || infix[i] == '*' || infix[i] == '-') 
+        } 
+		else if (infix[i] == '+' || infix[i] == '/' || infix[i] == '*' 
+		|| infix[i] == '-')//4.3 operator 
         {
-            if (s1.isEmpty()) 
+            if (s1.isEmpty())//4.3.1 stack is empty push
             {
                 s1.push(infix[i]);
-            } else {
-                while (!s1.isEmpty() && s1.topValue() != ')' && prec(s1.topValue()) > prec(infix[i])) 
+            } 
+			else 
+			{//if stack is not empty 4.3.2
+                while (!s1.isEmpty() && s1.topValue() != ')' 
+				&& prec(s1.topValue()) > prec(infix[i])) 
                 {
                     prefix += s1.pop();
                 }
                 s1.push(infix[i]);
             }
-        } else if (infix[i] == '(') 
+        } 
+		else if (infix[i] == '(') //4.4if input is opening bracket
         {
-            while (s1.topValue() != ')') 
+            while (s1.topValue() != ')') //pop till closing so not add closing
+            //bracket to output
             {
                 prefix += s1.pop();
             }
-            s1.pop();
+            s1.pop();//but do pop closing bracket too
         }
     }
-    while (!s1.isEmpty()) 
+    while (!s1.isEmpty())//5. check and pop all char from stack
     {
         prefix += s1.pop();
     }
-    return stringReversal(prefix); 
+    return stringReversal(prefix); //reverse and return
 }
-
-string postfixToInfix(string postfix) {
-    LinkedStack<string> s1;
-    for (int i = 0; i < postfix.length(); i++) {
-        if (isalpha(postfix[i]) || isdigit(postfix[i])) {
+/*
+Stack Application-(postfix-to-infix conversion) 
+1. Create an empty stack of type string 
+2. Read the input postfix expression char by char till the end of input 
+2.1.If the char is an operand: push it on the stack 
+2.2.It the char is operator: Pop two operands from stack form an 
+infix sub-expression () and push the sub-expression back on the stack. 
+3. At the end of the input pop the resultant infix expression 
+from the stack and display it
+*/
+string postfixToInfix(string postfix) 
+{
+    LinkedStack<string> s1;//1 create empty string stack
+    for (int i = 0; i < postfix.length(); i++) //2.read input char by char
+	{
+        if (isalpha(postfix[i]) || isdigit(postfix[i])) //2.1
+		{//if operand push to stack
             string s = "";
             s += postfix[i];
             s1.push(s);
-        } else if (postfix[i] == '+' || postfix[i] == '/' || postfix[i] == '*' || postfix[i] == '-') {
+            //to convert char to string
+        } 
+		else if (postfix[i] == '+' || postfix[i] == '/' || 
+		postfix[i] == '*' || postfix[i] == '-') //2.2.if operator
+		{
             string p1 = s1.pop();
             string p2 = s1.pop();
             s1.push("(" + p2 + postfix[i] + p1 + ")");
@@ -292,22 +391,35 @@ string postfixToInfix(string postfix) {
     }
     return s1.pop();
 }
-
-string prefixToInfix(string prefix) {
-    LinkedStack<string> s1;
-    prefix = stringReversal(prefix); // Now works
-    for (int i = 0; i < prefix.length(); i++) {
-        if (isalpha(prefix[i]) || isdigit(prefix[i])) {
+/*Stack Application-(prefix-to-infix conversion) 
+1. Create an empty stack of type string 
+2.Reverse the input expression 
+3.Read the reversed input prefix expression char by char till the end of input 
+3.1.If the char is an operand: push it on the stack 
+3.2.It the char is operator: 
+Pop two operands from stack from an infix sub-expression )( and push the sub-expression back on the stack. 
+4. At the end of the input pop the resultant expression from the stack, reverse and display it.*/
+string prefixToInfix(string prefix) 
+{
+    LinkedStack<string> s1;//1.create string stack
+    prefix = stringReversal(prefix);//2.reverse input
+    for (int i = 0; i < prefix.length(); i++)//3.read reversed input char by char 
+	{
+        if (isalpha(prefix[i]) || isdigit(prefix[i]))//3.1
+		{
             string s = "";
             s += prefix[i];
             s1.push(s);
-        } else if (prefix[i] == '+' || prefix[i] == '/' || prefix[i] == '*' || prefix[i] == '-') {
+        } 
+		else if (prefix[i] == '+' || prefix[i] == '/' || prefix[i] == '*' 
+		|| prefix[i] == '-') //3.2
+		{
             string p1 = s1.pop();
             string p2 = s1.pop();
             s1.push(")" + p2 + prefix[i] + p1 + "(");
         }
     }
-    return stringReversal(s1.pop()); // Now works
+    return stringReversal(s1.pop()); //4
 }
 
 string postfixToPrefix(string postfix) {

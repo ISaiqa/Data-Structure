@@ -19,7 +19,23 @@ class LinkedQueue
 		bool isEmpty();
 		T rearValue();
 		T frontValue();
+		bool inList(T element);
 };
+template <class T>
+bool LinkedQueue<T>::inList(T element)
+{
+	Node<T> *i=front;
+	while(i!=0)
+	{
+		if(i->getInfo()==element)
+		{
+			return true;
+		}
+		i=i->getNext();
+	}
+	return false;
+}
+
 template <class T>
 bool LinkedQueue<T>::isEmpty()
 {
@@ -75,7 +91,7 @@ T LinkedQueue<T>::dequeue()
 	else if(rear==front)
 	{
 		T element=rear->getInfo();
-		delete rear;
+		delete front;//delete rear same effect
 		rear=front=0;
 		return element;
 	}//else if

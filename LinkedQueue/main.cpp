@@ -19,6 +19,7 @@ int main(int argc, char** argv)
 	q1.enqueue(89);
 	q1.enqueue(12);
 	
+	cout<<q1.inList(9);
 	cout<<"Front value:"<<q1.frontValue()<<endl;
 	cout<<"Rear value:"<<q1.rearValue()<<endl;
 	cout<<"Remove element from front "<<q1.dequeue()<<endl;

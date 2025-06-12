@@ -18,18 +18,27 @@ class LinkedStack
 		bool isEmpty();
 		//bool isFull();
 		T topValue();
+		void removeAll();
 };
+template <class T>
+void LinkedStack<T>:: removeAll()
+{
+	while(!isEmpty())
+	{
+		pop();
+	}
+}
 
 template<class T>
 void LinkedStack<T>::push(T element)
 {
 	Node<T> *n=new Node<T>(element);
-	if(top==0)
+	if(top==0)//first element
 	{
 		top=n;
 	}
 	else
-	{
+	{//add to head logic
 		n->setNext(top);
 		top=n;
 	}
@@ -42,7 +51,7 @@ T LinkedStack<T>::pop()
 		{
 			cerr<<"Stack undeflow \n";
 		}
-	else if(top->getNext()==0)
+	else if(top->getNext()==0)//last element on stack set top to 0
 	{
 		T element=top->getInfo();
 		delete top;
@@ -50,11 +59,13 @@ T LinkedStack<T>::pop()
 		return element;
 	}
 	else
-	{	T element=top->getInfo();
-		Node<T> *temp=top->getNext();
+	{	
+		T element=top->getInfo();
+		Node<T> *temp=top->getNext();//stroes address of node that should be top
 		delete top;
 		top=temp;
 		return element;
+		//delete from head logic
 	}
 }
 

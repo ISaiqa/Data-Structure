@@ -23,9 +23,22 @@ class Queue
 		bool isEmpty();
 		T rearValue();
 		T frontValue();
+		bool inList(T element);
 			
 	
 };
+template <class T>
+bool Queue<T> ::inList(T element)
+{
+	for (int i=0;i<size-1;i++)
+	{
+		if(arr[i]==element)
+		{
+			return true;
+		}
+	}
+	return false;
+}
 template <class T>
 void Queue<T> ::enqueue(T element)
 {
@@ -53,6 +66,7 @@ T Queue<T> ::dequeue()
 	if(rear==-1 && front==-1) //queue is empty
 	{//as queue is empty we cant remove anything
 		cerr<<"Queue is empty";
+		return T();
 	}
 	else if (front!=rear) // front!=rear || front <rear
 	{//we remove elements always from front

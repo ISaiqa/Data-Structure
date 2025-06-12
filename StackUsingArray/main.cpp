@@ -178,11 +178,25 @@ string stringReversal(string input)
 	 
 }//void stringReversal(string input)
 
+/*
 
+Stack Application-Symbol Balancing 
+1. Create an empty stack of char 
+2. Read input text char by char till the end of input 
+2.1.  If char is an opening symbol, push it on the stack 
+2.2.  If char is a closing symbol 
+2.2.1. if stack is non-empty, pop a char from stack 
+and match it with input char. 
+If both characters do not match then report an error (“Symbol mismatch”) 
+2.2.2. If stack is empty, report an error ("Opening symbol missing”) 
+3. At the end of input, if stack is non-empty then report an error 
+(“Closing Symbol missing”)
+
+*/
 void symbolBalancing(string input)
 {
-	Stack<char> s1(input.length());
-	for(int i=0;i<input.length();i++)
+	Stack<char> s1(input.length());//1.empty char stack size =length of input string
+	for(int i=0;i<input.length();i++)//read input text char by char
 	{
 		if(input[i]=='{' || input[i]=='[' || input[i]=='(')//opening 2.1
 		{
@@ -190,25 +204,25 @@ void symbolBalancing(string input)
 		}
 		else if(input[i]=='}' || input[i]==']' || input[i]==')')//closing 2.2
 		{
-			if(s1.isEmpty())//empty
+			if(s1.isEmpty())//empty 2.2.2
 			{
 				cerr<<"Opening symbol missing \n"	;
 				return;
 			}
-			else//non-empty
+			else//non-empty 2.2.1
 			{
 				char p=s1.pop();
 				if(( input[i]=='}' && p!='{') ||
 				   ( input[i]==']' && p!='[')  ||
 				   ( input[i]==')' && p!='('))
-				   {
+				   {//it means that symbols are mismatched
 				   	 cerr<<"Symbol mismatch \n";
 				   	 return;
 				   }
 			}
 		}
 	}//for
-	if(!s1.isEmpty())//non-empty
+	if(!s1.isEmpty())//non-empty  3
 	{
 		cerr<<"Closing symbol missing \n";
 		return;
